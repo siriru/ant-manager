@@ -18,6 +18,10 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            
+        root:
+            pattern: ^/$
+            security: false
 
         home:
             pattern: ^/home$
@@ -39,8 +43,6 @@ security:
                 username_parameter: username
                 password_parameter: password
 
-                csrf_parameter: _csrf_token
-                intention: authenticate
             logout:
                 path:   /logout
                 target: /home

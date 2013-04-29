@@ -4,6 +4,9 @@
 /build/
 /vendor/
 /bin/
+/.settings/
+.buildpath
+.project
 /composer.phar
 /composer.lock
 *~
