@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: ants
+    database_user: root
+    database_password: l15el0ve
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: a9d26b71cec610569a7c8d496102a63d5
+    database_path: null

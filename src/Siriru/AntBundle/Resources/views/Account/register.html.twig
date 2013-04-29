@@ -1,0 +1,77 @@
+{% extends 'SiriruAntBundle::layout.html.twig' %}
+{% block title %}Register account{% endblock %}
+{% block style %}
+<style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+    }
+
+    .form-register {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 50px auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .form-register .form-register-heading,
+    .form-register .checkbox {
+        margin-bottom: 10px;
+    }
+    .form-register input[type="text"],
+    .form-register input[type="password"],
+    .form-register input[type="email"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+    }
+
+</style>
+{% endblock %}
+{% block body %}
+{{ form_errors(form) }}
+<form class="form-register" action="{{ path('account_create')}}" method="post" {{ form_enctype(form) }}>
+    <h2 class="form-register-heading">Please register</h2>
+    
+    <div>
+        {{ form_errors(form.user.username) }}
+        {{ form_widget(form.user.username, { 'attr': {'class': 'input-block-level'} }) }}
+    </div>
+
+    <div>
+        {{ form_errors(form.user.email.email) }}
+        {{ form_widget(form.user.email.email, { 'attr': {'class': 'input-block-level'} }) }}
+    </div>
+
+    <div>
+        {{ form_errors(form.user.email.confirm) }}
+        {{ form_widget(form.user.email.confirm, { 'attr': {'class': 'input-block-level'} }) }}
+    </div>
+
+    <div>
+        {{ form_errors(form.user.password.password) }}
+        {{ form_widget(form.user.password.password, { 'attr': {'class': 'input-block-level'} }) }}
+    </div>
+
+    <div>
+        {{ form_errors(form.user.password.confirm) }}
+        {{ form_widget(form.user.password.confirm, { 'attr': {'class': 'input-block-level'} }) }}
+    </div>
+
+    <label class="checkbox">
+        {{ form_errors(form.terms) }}
+        {{ form_widget(form.terms) }} Terms
+    </label>
+
+    {{ form_rest(form) }}
+    <button class="btn btn-large btn-primary" type="submit">Register</button>
+</form>
+{% endblock %}
