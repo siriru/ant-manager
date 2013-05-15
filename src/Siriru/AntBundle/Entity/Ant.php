@@ -22,7 +22,7 @@ class Ant
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="AntType")
+     * @ORM\ManyToOne(targetEntity="AntType")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      * @Assert\NotBlank()
      */
@@ -33,4 +33,11 @@ class Ant
      * @Assert\NotBlank()
      */
     protected $quantity;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Colony")
+     * @ORM\JoinColumn(name="colony_id", referencedColumnName="id")
+     * @Assert\NotBlank()
+     */
+    protected $colony;
 }

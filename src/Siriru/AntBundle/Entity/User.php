@@ -192,7 +192,7 @@ class User implements UserInterface, \Serializable
     /**
      * Set active
      *
-     * @param boolean $isActive
+     * @param boolean $active
      * @return User
      */
     public function setActive($active)
@@ -210,5 +210,38 @@ class User implements UserInterface, \Serializable
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Add colonies
+     *
+     * @param \Siriru\AntBundle\Entity\Colony $colonies
+     * @return User
+     */
+    public function addColony(\Siriru\AntBundle\Entity\Colony $colony)
+    {
+        $this->colonies[] = $colony;
+    
+        return $this;
+    }
+
+    /**
+     * Remove colonies
+     *
+     * @param \Siriru\AntBundle\Entity\Colony $colonies
+     */
+    public function removeColony(\Siriru\AntBundle\Entity\Colony $colony)
+    {
+        $this->colonies->removeElement($colony);
+    }
+
+    /**
+     * Get colonies
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getColonies()
+    {
+        return $this->colonies;
     }
 }

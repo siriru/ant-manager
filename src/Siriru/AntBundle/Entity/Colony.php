@@ -26,6 +26,23 @@ class Colony
      * @Assert\NotBlank()
      */
     protected $name;
+    
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $capacity;
+    
+    /**
+     * Birth rate per second
+     * @ORM\Column(name="birth_rate", type="integer")
+     */
+    protected $birthRate;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="colonies")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     **/
+    protected $user;
 
     public function __construct()
     {
@@ -62,5 +79,74 @@ class Colony
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Siriru\AntBundle\Entity\User $user
+     * @return Colony
+     */
+    public function setUser(\Siriru\AntBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Siriru\AntBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set capacity
+     *
+     * @param integer $capacity
+     * @return Colony
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+    
+        return $this;
+    }
+
+    /**
+     * Get capacity
+     *
+     * @return integer 
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * Set birthRate
+     *
+     * @param integer $birthRate
+     * @return Colony
+     */
+    public function setBirthRate($birthRate)
+    {
+        $this->birthRate = $birthRate;
+    
+        return $this;
+    }
+
+    /**
+     * Get birthRate
+     *
+     * @return integer 
+     */
+    public function getBirthRate()
+    {
+        return $this->birthRate;
     }
 }

@@ -12,6 +12,10 @@ class ColonyType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('user', 'entity', array(
+                'class' => 'SiriruAntBundle:User',
+                'property' => 'username',
+            ));
         ;
     }
 

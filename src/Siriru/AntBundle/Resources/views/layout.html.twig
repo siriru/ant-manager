@@ -42,6 +42,9 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
+                    {% if app.user %}
+                        <li><a href="{{ path('user_colonies') }}">Game</a></li>
+                    {% endif %}
                     <li><a href="#about">About</a></li>
                     <li><a href="{{ path('contact') }}">Contact</a></li>
                     <li class="dropdown">
@@ -89,18 +92,9 @@
 {% endblock %}
 
 <!-- /container -->
-<script src="{{ asset('bundles/siriruant/js/jquery.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-transition.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-alert.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-modal.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-dropdown.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-scrollspy.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-tab.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-tooltip.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-popover.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-button.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-collapse.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-carousel.js') }}"></script>
-<script src="{{ asset('bundles/siriruant/js/bootstrap-typeahead.js') }}"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="{{ asset('bundles/siriruant/js/bootstrap.js') }}"></script>
+{% block javascript %}
+{% endblock %}
 </body>
 </html>

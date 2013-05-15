@@ -1,0 +1,26 @@
+{% extends 'SiriruAntBundle::layout.html.twig' %}
+
+{% block body -%}
+
+<h2>Colony > {{ entity.name }}</h2>
+
+<span id='ants'>0</span>
+{% block javascript %}
+<script type="text/javascript">
+
+$(document).ready(function() {
+    setInterval(function() {
+        var nb = parseInt($('#ants').text());
+        if( nb < {{ entity.capacity }} ) {
+        	var birthRate = {{ entity.birthRate }};
+            birthrate = 5;
+            $('#ants').text(nb + birthrate);
+        }
+        
+    }, 1000)
+});
+    
+</script>
+{% endblock %}
+
+{% endblock %}

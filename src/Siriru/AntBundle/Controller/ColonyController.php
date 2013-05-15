@@ -3,6 +3,7 @@
 namespace Siriru\AntBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,15 +13,59 @@ use Siriru\AntBundle\Form\Type\ColonyType;
 
 /**
  * Colony controller.
- *
- * @Route("/colony")
  */
 class ColonyController extends Controller
 {
     /**
+     * Lists all Colony entities owned by current user.
+     *
+     * @Route("/colonies", name="user_colonies")
+     * @Method("GET")
+     * @Template("SiriruAntBundle:Colony:user-colonies.html.twig")
+     */
+    public function userColoniesAction(){
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $entities = $em->getRepository('SiriruAntBundle:Colony')->findByUser($user);
+        
+        return array(
+                'entities' => $entities,
+        );
+    }
+    
+    /**
+     * Finds and displays a Colony entity owned by current user.
+     *
+     * @Route("/colony/{id}", name="user_colony")
+     * @Method("GET")
+     * @Template("SiriruAntBundle:Colony:user-colony.html.twig")
+     */
+    public function userColonyAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+    
+        $entity = $em->getRepository('SiriruAntBundle:Colony')->find($id);
+        
+        if($entity->getUser() != $this->getUser()) {
+            throw new AccessDeniedException('This is not your colony');
+        }
+    
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Colony entity.');
+        }
+    
+        $deleteForm = $this->createDeleteForm($id);
+    
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+    
+    /**
      * Lists all Colony entities.
      *
-     * @Route("/", name="colony")
+     * @Route("/admin/colonies", name="colonies")
      * @Method("GET")
      * @Template()
      */
@@ -38,7 +83,7 @@ class ColonyController extends Controller
     /**
      * Creates a new Colony entity.
      *
-     * @Route("/", name="colony_create")
+     * @Route("/admin/colonies", name="colony_create")
      * @Method("POST")
      * @Template("SiriruAntBundle:Colony:new.html.twig")
      */
@@ -65,7 +110,7 @@ class ColonyController extends Controller
     /**
      * Displays a form to create a new Colony entity.
      *
-     * @Route("/new", name="colony_new")
+     * @Route("admin/colony/new", name="colony_new")
      * @Method("GET")
      * @Template()
      */
@@ -83,7 +128,7 @@ class ColonyController extends Controller
     /**
      * Finds and displays a Colony entity.
      *
-     * @Route("/{id}", name="colony_show")
+     * @Route("admin/colony/{id}", name="colony_show")
      * @Method("GET")
      * @Template()
      */
@@ -108,7 +153,7 @@ class ColonyController extends Controller
     /**
      * Displays a form to edit an existing Colony entity.
      *
-     * @Route("/{id}/edit", name="colony_edit")
+     * @Route("admin/colony/{id}/edit", name="colony_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,7 +180,7 @@ class ColonyController extends Controller
     /**
      * Edits an existing Colony entity.
      *
-     * @Route("/{id}", name="colony_update")
+     * @Route("admin/colony/{id}", name="colony_update")
      * @Method("PUT")
      * @Template("SiriruAntBundle:Colony:edit.html.twig")
      */
@@ -170,7 +215,7 @@ class ColonyController extends Controller
     /**
      * Deletes a Colony entity.
      *
-     * @Route("/{id}", name="colony_delete")
+     * @Route("admin/colony/{id}", name="colony_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
