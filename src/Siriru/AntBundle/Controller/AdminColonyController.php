@@ -12,53 +12,26 @@ use Siriru\AntBundle\Entity\Colony;
 use Siriru\AntBundle\Form\Type\ColonyType;
 
 /**
- * Colony controller.
+ * Admin Colony controller.
+ * @Route("/admin")
  */
-class ColonyController extends Controller
+class AdminColonyController extends Controller
 {
     /**
-     * Lists all Colony entities owned by current user.
+     * Lists all Colony entities.
      *
      * @Route("/colonies", name="colonies")
      * @Method("GET")
-     * @Template("SiriruAntBundle:Colony:index.html.twig")
+     * @Template()
      */
-    public function indexAction(){
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
-        $entities = $em->getRepository('SiriruAntBundle:Colony')->findByUser($user);
-        
-        return array(
-            'entities' => $entities,
-        );
-    }
-    
-    /**
-     * Finds and displays a Colony entity owned by current user.
-     *
-     * @Route("/colony/{id}", name="colony")
-     * @Method("GET")
-     * @Template("SiriruAntBundle:Colony:show.html.twig")
-     */
-    public function shoowAction($id)
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-    
-        $entity = $em->getRepository('SiriruAntBundle:Colony')->find($id);
-        
-        if($entity->getUser() != $this->getUser()) {
-            throw new AccessDeniedException('This is not your colony');
-        }
-    
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Colony entity.');
-        }
-    
-        $deleteForm = $this->createDeleteForm($id);
-    
+
+        $entities = $em->getRepository('SiriruAntBundle:Colony')->findAll();
+
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entities' => $entities,
         );
     }
 
@@ -104,6 +77,31 @@ class ColonyController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+        );
+    }
+
+    /**
+     * Finds and displays a Colony entity.
+     *
+     * @Route("/colony/{id}", name="colony_show")
+     * @Method("GET")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('SiriruAntBundle:Colony')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Colony entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
         );
     }
 

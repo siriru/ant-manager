@@ -39,7 +39,7 @@ class Colony
     protected $birthRate;
     
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="colonies")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      **/
     protected $user;
